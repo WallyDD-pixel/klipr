@@ -1,5 +1,12 @@
 # app
 
+## Terms of Service
+https://lespcdewarren.fr/terms
+
+## Privacy Policy
+https://lespcdewarren.fr/privacy
+# app
+
 A new Flutter project.
 
 ## Getting Started

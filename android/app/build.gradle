@@ -1,61 +1,52 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
 
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
-if (!keystorePropertiesFile.exists()) {
-    keystorePropertiesFile = rootProject.file('android/key.properties')
-}
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
-
 android {
-    namespace = "com.example.app"
+    namespace "com.klipr.app"
     compileSdkVersion 35
-    ndkVersion = "26.1.10909125"
+    ndkVersion "26.1.10909125"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
-
-    defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-            applicationId = "com.klipr.app"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdkVersion 35
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        jvmTarget = '1.8'
     }
 
     signingConfigs {
         release {
-            if (keystorePropertiesFile.exists()) {
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-            }
+            // On inscrit les informations en dur pour éviter les problèmes de chemin
+            storeFile file("chho-release-key.jks")
+            storePassword "Escalop08"
+            keyAlias "chho"
+            keyPassword "Escalop08"
         }
     }
+
+    defaultConfig {
+        applicationId "com.klipr.app"
+        minSdk 21
+        targetSdkVersion 35
+        versionCode 1
+        versionName "1.0"
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
+        }
+        debug {
+            // On signe aussi le debug avec la même clé
             signingConfig signingConfigs.release
         }
     }
 }
 
 flutter {
-    source = "../.."
+    source '../..'
 }
